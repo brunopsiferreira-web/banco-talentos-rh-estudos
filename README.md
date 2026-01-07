@@ -6,12 +6,12 @@
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite)](https://sqlite.org)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-> 💡 **De analista de RH para desenvolvedor Python** — este projeto faz parte da minha transição de carreira.  
-> Construído inteiramente por mim, do zero, para treinar Python, APIs, bancos de dados e arquitetura limpa.
+> 💡 **De analista de RH para desenvolvedor Python e QA** — este projeto faz parte da minha transição de carreira.  
+> Construído inteiramente por mim, do zero, para treinar Python, APIs, bancos de dados,testes e arquitetura limpa.
 
 ---
 
-## 🎯 Objetivo
+## Objetivo
 
 Criar um **sistema interno de banco de talentos** que:
 - Cadastre candidatos com currículo em PDF  
@@ -24,7 +24,7 @@ Tudo isso **com código limpo, testável e escalável** — não só funcional.
 
 ---
 
-## 🛠️ Tecnologias & Boas Práticas
+## Tecnologias & Boas Práticas
 
 | Camada | Tecnologia | Por quê? |
 |--------|------------|----------|
@@ -38,7 +38,7 @@ Tudo isso **com código limpo, testável e escalável** — não só funcional.
 
 ---
 
-## 🌟 Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
 ### Cadastro de Candidatos
 - Formulário com validação no frontend e backend  
