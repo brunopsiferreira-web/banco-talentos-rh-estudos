@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mb-8">
+    <a href="/jobs" class="text-sm text-slate-500 hover:text-blue-600 mb-2 inline-flex items-center">
+        <i class="ph ph-arrow-left mr-1"></i> Voltar para vagas
+    </a>
+</div>
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-sm">
+    <h2 class="text-2xl font-bold mb-4">Assistente de Vagas com IA</h2>
+
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Descreva a vaga que você precisa:</label>
+        <textarea id="userPrompt" rows="4" class="w-full p-3 border rounded-lg"
+            placeholder="Ex: Preciso de um Dev Python que saiba Django e React, nível pleno..."></textarea>
+
+        <button onclick="askAI()" class="mt-3 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+            Gerar Vaga
+        </button>
+    </div>
+
+    <div id="resultArea" class="hidden border-t pt-6">
+        <h3 class="font-bold text-lg mb-3">Sugestão da IA:</h3>
+
+        <form id="aiForm">
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs font-bold uppercase text-gray-500">Título</label>
+                    <input type="text" id="aiTitle" name="title" class="w-full border rounded p-2 bg-gray-50">
+                </div>
+                <div>
+                    <label class="text-xs font-bold uppercase text-gray-500">Descrição</label>
+                    <textarea id="aiDescription" name="description" rows="6"
+                        class="w-full border rounded p-2 bg-gray-50"></textarea>
+                </div>
+                <div>
+                    <label class="text-xs font-bold uppercase text-gray-500">Requisitos</label>
+                    <input type="text" id="aiRequirements" name="requirements"
+                        class="w-full border rounded p-2 bg-gray-50">
+                </div>
+            </div>
+
+            <div class="mt-6 flex gap-3">
+                <button type="button" onclick="confirmCreation()"
+                    class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    Confirmar e Criar Vaga
+                </button>
+                <button type="button" onclick="resetForm()"
+                    class="px-6 py-2 border text-gray-600 rounded-lg hover:bg-gray-50">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    async function askAI() {
+        const text = document.getElementById('userPrompt').value;
+        const btn = document.querySelector('button[onclick="askAI()"]');
+
+        // Feedback visual de carregamento
+        btn.innerText = "Pensando...";
+        btn.disabled = true;
+
+        try {
+            // 1. Envia texto para o Backend (Bot)
+            const response = await fetch('/api/v1/bot/suggest-job', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            const data = await response.json();
+
+            // 2. Preenche o formulário com a resposta da IA
+            document.getElementById('aiTitle').value = data.title;
+            document.getElementById('aiDescription').value = data.description;
+            document.getElementById('aiRequirements').value = data.requirements;
+
+            // 3. Mostra o resultado
+            document.getElementById('resultArea').classList.remove('hidden');
+
+        } catch (error) {
+            alert("Erro ao falar com a IA");
+            console.error(error);
+        } finally {
+            btn.innerText = "Gerar Vaga Automaticamente";
+            btn.disabled = false;
+        }
+    }
+
+    async function confirmCreation() {
+        // 4. Pega os dados revisados do formulário
+        const jobData = {
+            title: document.getElementById('aiTitle').value,
+            description: document.getElementById('aiDescription').value,
+            requirements: document.getElementById('aiRequirements').value,
+            status: "aberta"
+        };
+
+        // 5. Envia para a API REAL de criação de vagas (/jobs)
+        const response = await fetch('/api/v1/jobs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jobData)
+        });
+
+        if (response.ok) {
+            window.location.href = '/jobs'; // Sucesso!
+        } else {
+            alert("Erro ao salvar no banco de dados.");
+        }
+    }
+
+    async function resetForm() {
+        document.getElementById('userPrompt').value = '';
+        document.getElementById('aiForm').reset();
+        document.getElementById('resultArea').classList.add('hidden');
+    }
+</script>
+{% endblock %}

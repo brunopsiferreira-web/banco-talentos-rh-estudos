@@ -6,14 +6,29 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
             <h1 class="text-2xl font-bold text-slate-800">Vagas Disponíveis</h1>
-            <p class="text-slate-500 mt-1">Gerencie as oportunidades em aberto.</p>
+            <p class="text-slate-500 mt-1">Gerencie as oportunidades em aberto e crie novas com IA.</p>
         </div>
-        <div class="mt-4 md:mt-0">
+
+        <div class="mt-4 md:mt-0 flex flex-row gap-3">
             <a href="/jobs/new"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">
-                <i class="ph ph-plus-circle mr-2 text-lg"></i> Nova Vaga
+                <i class="ph ph-plus-circle mr-2 text-lg"></i>
+                <span>Nova Vaga</span>
             </a>
+            <a href="/api/v1/jobs/ai-assistant"
+                class="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition shadow-sm">
+                <i class="ph ph-sparkle mr-2 text-lg"></i>
+                <span>Criar com IA</span>
+            </a>
+
+
         </div>
+    </div>
+
+    <hr class="border-slate-200 mb-8">
+
+    <div class="mb-6">
+        <h2 class="text-xl font-bold text-slate-800">Vagas Recentes</h2>
     </div>
 
     {% if jobs %}

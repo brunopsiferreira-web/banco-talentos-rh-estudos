@@ -12,6 +12,7 @@ from app.models.job import JobOpening
 from sqlalchemy.orm import Session
 from fastapi import Depends
 
+
 # Cria tabelas (só em desenvolvimento)
 Base.metadata.create_all(bind=engine)
 

@@ -35,7 +35,7 @@ def get_job_matches(db: Session, job_id: int):
             })
     return sorted(matches, key=lambda x: x["compatibility_score"], reverse=True)
 
-def uptate_job(db: Session, job_id: int, job_data: JobCreate):
+def update_job(db: Session, job_id: int, job_data: JobCreate):
     job = get_job(db, job_id)
     if not job:
         return None
